@@ -1,0 +1,33 @@
+.tags {
+    float: left;
+    width: 70%;
+    padding-bottom: 1rem
+}
+
+.right-col {
+    float: right;
+    width: 30%;
+    padding-left: 2rem;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+.payment-method, .shipping-address{
+    padding-bottom: 1rem;
+}
+
+.addAddress {
+    margin: auto;
+    width: 32rem;
+}
+
+.valid-msg {
+    font-size: .9em;
+    color: red;
+}

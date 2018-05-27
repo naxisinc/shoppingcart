@@ -1,0 +1,197 @@
+<div [hidden]="isEmpty==false">
+  <p>No items in the cart</p>
+</div>
+
+<form id="checkoutForm" (ngSubmit)="checkout()"></form>
+
+<div [hidden]="isEmpty==true">
+  <div class="right-col">
+    <!--ShippingOptions-->
+    <div class="">
+      <h5>Shipping options:</h5>
+      <!-- Lo q me permite seleccionar solo un radio es mantener el mismo name y variar solo los ids -->
+      <div style="padding-bottom: 1rem;">
+        <div class="form-check">
+          <input class="form-check-input" mdbInputDirective type="radio" name="group1" id="radio1"
+            (click)=shippingOption(27.99)
+            form="checkoutForm"
+            [value]="3" [(ngModel)]="shippingCost">
+          <label class="form-check-label" for="radio1">Other day ($27.99)</label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" mdbInputDirective type="radio" name="group1" id="radio2"
+            (click)=shippingOption(12.99)
+            form="checkoutForm"
+            [value]="2" [(ngModel)]="shippingCost">
+          <label class="form-check-label" for="radio2">2-3 business days ($12.99)</label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" mdbInputDirective type="radio" name="group1" id="radio3"
+            (click)=shippingOption(5.99) 
+            form="checkoutForm" 
+            [value]="1" [(ngModel)]="shippingCost">
+          <label class="form-check-label" for="radio3">7-10 business days ($5.99)</label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" mdbInputDirective type="radio" name="group1" id="radio4"
+            (click)=shippingOption(0)
+            form="checkoutForm"
+            [value]="0" [(ngModel)]="shippingCost">
+          <label class="form-check-label" for="radio4">Free shipping 15 days or more</label>
+        </div>
+      </div>
+    </div>
+    <!--./ShippingOptions-->
+
+    <!--Prices Panel-->
+    <div class="card">
+      <div class="card-header deep-orange lighten-1 white-text text-align-center font-weight-bold">
+        Order Summary
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 col-sm-6">Items: </div>
+          <div class="col-md-6 col-sm-6 font-weight-bold text-align-right">{{ ItemsPrice | currency }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6">Shipping: </div>
+          <div class="col-md-6 col-sm-6 font-weight-bold text-align-right">{{ ShippingPrice | currency }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6">Tax: </div>
+          <div class="col-md-6 col-sm-6 font-weight-bold text-align-right">{{ Tax | currency }}</div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-6 col-sm-6">Total: </div>
+          <div class="col-md-6 col-sm-6 font-weight-bold text-align-right">{{ TotalPrice | currency }}</div>
+        </div>
+        <hr>
+        <div class="text-align-center">
+          <input type="submit" form="checkoutForm" class="btn btn-success waves-light" mdbWavesEffect value="Check Out">
+        </div>
+      </div>
+    </div>
+    <!--/.Prices Panel-->
+  </div>
+
+  <div class="shipping-address">
+
+    <div class="card card-body">
+      <h4 class="card-title">Shipping Address</h4>
+
+      <div class="form-check" *ngFor="let address of shippingAddress; let idx = index">
+        <input class="form-check-input" type="radio" name="address-group" id="{{idx}}"
+          form="checkoutForm"
+          [value]="idx" [(ngModel)]="defaultPos">
+        <label class="form-check-label" for="{{idx}}">{{address.street +' '+ address.apt +' '+ address.city +', '+ address.state +'. '+ address.zip}}</label>
+      </div>
+
+      <div class="addAddress">
+        <br>
+        <div class="text-align-center">Add a new address</div>
+
+        <form [formGroup]="AddAddressForm" (ngSubmit)="AddAddress()">
+
+          <div class="row">
+            <div class="col-md-8">
+              <div class="md-form">
+                <input type="text" formControlName="street" class="form-control" mdbActive>
+                <label>Street</label>
+                <div class="valid-msg" *ngIf="!AddAddressForm.controls['street'].valid && AddAddressForm.controls['street'].touched">Minimum characters are 3 and maximum 30</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="md-form">
+                <input type="text" formControlName="apt" class="form-control" mdbActive>
+                <label>Apt</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="md-form">
+                <input type="text" formControlName="city" class="form-control" mdbActive>
+                <label>City</label>
+                <div class="valid-msg" *ngIf="!AddAddressForm.controls['city'].valid && AddAddressForm.controls['city'].touched">Minimum characters are 3 and maximum 20</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="md-form">
+                <input type="text" formControlName="state" class="form-control" mdbActive>
+                <label>State</label>
+                <div class="valid-msg" *ngIf="!AddAddressForm.controls['state'].valid && AddAddressForm.controls['state'].touched">Minimum characters are 3 and maximum 10</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="md-form">
+                <input type="text" formControlName="zipcode" class="form-control" mdbActive maxlength="5">
+                <label>Zip Code</label>
+                <div class="valid-msg" *ngIf="!AddAddressForm.controls['zipcode'].valid && AddAddressForm.controls['zipcode'].touched">This zip code is invalid</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="padding-top: 1rem;">
+            <div class="col-md-8">
+              <div class="form-check" style="padding-top: 1rem;">
+                <input type="checkbox" formControlName="default" class="form-check-input" id="default">
+                <label class="form-check-label" for="default">Default shipping address</label>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="text-align-right">
+                <input type="submit" class="btn btn-primary waves-light" mdbWavesEffect value="Save" [disabled]=!AddAddressForm.valid>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="tags" *ngFor="let product of products; let idx = index">
+    <!--Panel-->
+    <div class="card">
+
+      <div class="card-header deep-orange lighten-1 white-text">
+        Product ID: {{ product._id}}
+      </div>
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-2 col-sm-2">
+            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1.jpg" class="" alt="">
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <h4 class="card-title">{{ product.name }}</h4>
+            <p class="card-text">{{ product.description }}</p>
+            <h3 style="padding:0;">{{ product.price | currency }}</h3>
+          </div>
+          <div class="col-md-5 col-sm-5 border">
+            <div class="row">
+              <div class="md-form">
+                <input type="text" class="form-control" mdbActive
+                  [(ngModel)]="product.qty" (change)="qtyChanged(idx, product.qty, product._id)">
+                <label>Qty</label>
+                <div class="valid-msg" *ngIf="!isValidQty[idx]">Invalid</div>
+              </div>
+            </div>
+            <div class="row">
+              <a class="" (click)="removeItem(product._id)">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!--/.Panel-->
+  </div>
+</div>

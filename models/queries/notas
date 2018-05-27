@@ -1,0 +1,11 @@
+PENDING!!!
+Estudiar method DELETE, PUT, POST and GET
+ver pq no puedo pasarle la variable dentro de una variable al observable y si dentro de un object
+mantener flotando el bloque de subtotales
+
+DONE!!!
+cuando cambie la cantidad de items guardar la nueva en la db 
+Actualizar el badge del carro al eliminar items
+Limpiar el form del address despues de add
+fijar validaciones de qty (Trabajar en un metodo mas eficiente para validar)
+Revisar validaciones del zipcode

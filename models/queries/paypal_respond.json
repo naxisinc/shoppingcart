@@ -1,0 +1,119 @@
+{
+    "id": "PAY-6B55146418280823KLMC3HBI",
+    "intent": "sale",
+    "state": "approved",
+    "cart": "82R65965JB9304605",
+    "payer": {
+        "payment_method":"paypal",
+        "status":"VERIFIED",
+        "payer_info": {
+            "email":"naxispersonal@gmail.com",
+            "first_name":"Pedro",
+            "last_name":"Castillo",
+            "payer_id":"F7L93P7KPQZMA",
+            "shipping_address": {
+                "recipient_name":"Pedro Castillo",
+                "line1":"1 Main St",
+                "city":"San Jose",
+                "state":"CA",
+                "postal_code":"95131",
+                "country_code":"US"
+            },
+            "country_code":"US"
+        }
+    },
+    "transactions": [{
+        "amount": {
+            "total":"6.00",
+            "currency":"USD",
+            "details": {}
+        },
+        "payee": {
+            "merchant_id":"C3MEQQ7ERQ6UC",
+            "email":"naxisbusiness@gmail.com"
+        },
+        "description":"This is the payment description.",
+        "item_list": {
+            "items": [
+                {
+                    "name":"Pencil",
+                    "sku":"5afdb31661dfc22b1d2d4b0a",
+                    "price":"1.00",
+                    "currency":"USD",
+                    "quantity":1
+                },
+                {
+                    "name":"Phone",
+                    "sku":"5afdb36c61dfc22b1d2d4b0b",
+                    "price":"2.00",
+                    "currency":"USD",
+                    "quantity":1
+                },
+                {
+                    "name":"Monito",
+                    "sku":"5afdb36c61dfc22b1d2d4b0c",
+                    "price":"3.00",
+                    "currency":"USD",
+                    "quantity":1
+                }
+            ],
+            "shipping_address": {
+                "recipient_name":"Pedro Castillo",
+                "line1":"1 Main St",
+                "city":"San Jose",
+                "state":"CA",
+                "postal_code":"95131",
+                "country_code":"US"
+            }
+        },
+        "related_resources": [
+            {
+                "sale": {
+                    "id":"88658399UM655574G",
+                    "state":"completed",
+                    "amount": {
+                        "total":"6.00",
+                        "currency":"USD",
+                        "details": {
+                            "subtotal":"6.00"
+                        }
+                    },
+                    "payment_mode":"INSTANT_TRANSFER",
+                    "protection_eligibility":"ELIGIBLE",
+                    "protection_eligibility_type":"ITEM_NOT_RECEIVED_ELIGIBLE,UNAUTHORIZED_PAYMENT_ELIGIBLE",
+                    "transaction_fee": {
+                        "value":"0.47",
+                        "currency":"USD"
+                    },
+                    "parent_payment":"PAY-6B55146418280823KLMC3HBI",
+                    "create_time":"2018-05-23T18:31:49Z",
+                    "update_time":"2018-05-23T18:31:49Z",
+                    "links": [
+                        {
+                            "href":"https://api.sandbox.paypal.com/v1/payments/sale/88658399UM655574G",
+                            "rel":"self",
+                            "method":"GET"
+                        },
+                        {
+                            "href":"https://api.sandbox.paypal.com/v1/payments/sale/88658399UM655574G/refund",
+                            "rel":"refund",
+                            "method":"POST"
+                        },
+                        {
+                            "href":"https://api.sandbox.paypal.com/v1/payments/payment/PAY-6B55146418280823KLMC3HBI",
+                            "rel":"parent_payment",
+                            "method":"GET"
+                        }
+                    ]
+                }
+            }
+        ]
+    }],
+    "create_time":"2018-05-23T18:31:50Z",
+    "links": [{
+        "href":"https://api.sandbox.paypal.com/v1/payments/payment/PAY-6B55146418280823KLMC3HBI",
+        "rel":"self",
+        "method":"GET"
+    }],
+    "httpStatusCode":200
+}

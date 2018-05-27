@@ -1,0 +1,24 @@
+{
+  "name": "project_v2",
+  "version": "1.0.0",
+  "description": "Learningn mean",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "dependencies": {
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "cors": "*",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "^5.0.18",
+    "passport": "*",
+    "passport-jwt": "*",
+    "paypal-rest-sdk": "^1.8.1"
+  },
+  "author": "Pedro Castillo",
+  "license": "ISC",
+  "devDependencies": {}
+}
