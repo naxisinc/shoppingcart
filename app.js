@@ -1,62 +1,72 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const passport = require('passport');
-const mongoose = require('mongoose');
-const config = require('./config/database');
-
-// Connect To Database
-mongoose.connect(config.database, {
-    // The `useMongoClient` option is no longer necessary in mongoose 5.x, please remove it
-    // Este error me lo estaba mostrando cuando iniciaba el servidor pq la linea de abajo estaba sin comentar
-    // useMongoClient: true 
-});
-
-// On Connection
-mongoose.connection.on('connected', () => {
-    console.log('Connected to database '+config.database);
-});
-
-// On Error
-mongoose.connection.on('error', (err) => {
-    console.log('Database error '+err);
-});
+const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
+// const cors = require("cors");
+// const passport = require("passport");
+const mongoose = require("mongoose");
 
 const app = express();
 
-const users = require('./routes/users');
-const products = require('./routes/products');
-const cart = require('./routes/shoppingcar');
+// Set Static Folder
+app.use(express.static(path.join(__dirname, "public")));
+
+// Connect To Database
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+});
+
+// On Connection
+mongoose.connection.on("connected", () => {
+  console.log("Connected to database " + process.env.MONGO_URI);
+});
+
+// On Error
+mongoose.connection.on("error", (err) => {
+  console.log("Database error " + err);
+});
 
 // Port number
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// CORS Middleware
-app.use(cors());
-
-// Set Static Folder
-app.use(express.static(path.join(__dirname, 'public')));
+// Maintenance Middleware
+// app.use((req, res, next) => {
+//   res.status(503).send("Site is currently down. Check back soon!");
+// });
 
 // Body Parse Middleware
 app.use(bodyParser.json());
 
-// Passport Middleware
-app.use(passport.initialize());
-app.use(passport.session());
+// // CORS Middleware
+// app.use(
+//   cors({
+//     allowedHeaders: ["token", "Content-Type", "Authorization"],
+//     exposedHeaders: ["token"],
+//   })
+// );
 
-require('./config/passport')(passport);
+// // Passport Middleware
+// app.use(passport.initialize());
+// app.use(passport.session());
 
-app.use('/users', users);
-app.use('/products', products);
-app.use('/cart', cart);
+// require("./config/passport")(passport);
 
-// Index route
-app.get('/', (req, res) => {
-    res.send('invalid endpoint');
+const users = require("./routes/users");
+const products = require("./routes/products");
+const cart = require("./routes/shoppingcart");
+
+app.use("/users", users);
+app.use("/products", products);
+app.use("/cart", cart);
+
+// 404 Page not found!
+app.get("*", (req, res) => {
+  res.send("404 Page not found!");
 });
 
 // Start serve
 app.listen(port, () => {
-    console.log('server started on port: '+port);
+  console.log("Server started on port: " + port);
 });
